@@ -49,10 +49,10 @@ Vagrant.configure("2") do |config|
         ethernets:
           eth0:
             dhcp4: no
-            addresses: [192.168.0.10/24]
+            addresses: [192.168.50.10/24]
             gateway4: 192.168.0.1
             nameservers:
-              addresses: [192.168.0.10,192.168.0.11]
+              addresses: [192.168.50.10,192.168.50.11]
       ' > /etc/netplan/00-installer-config.yaml
       
       # Apply the configuration
@@ -101,10 +101,10 @@ Vagrant.configure("2") do |config|
         ethernets:
           eth0:
             dhcp4: no
-            addresses: [192.168.0.11/24]
-            gateway4: 192.168.0.1
+            addresses: [192.168.50.11/24]
+            gateway4: 192.168.50.1
             nameservers:
-              addresses: [192.168.0.10,192.168.0.11]
+              addresses: [192.168.50.10,192.168.50.11]
       ' > /etc/netplan/00-installer-config.yaml
       
       # Apply the configuration
@@ -127,10 +127,10 @@ Vagrant.configure("2") do |config|
         ethernets:
           eth0:
             dhcp4: no
-            addresses: [192.168.0.11/24]
-            gateway4: 192.168.0.1
+            addresses: [192.168.50.11/24]
+            gateway4: 192.168.50.1
             nameservers: {domain}
-              addresses: [192.168.0.11,192.168.0.10]
+              addresses: [192.168.50.11,192.168.50.10]
       EOF
     SHELL
   end
