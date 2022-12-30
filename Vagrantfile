@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
       rm -f /var/lib/
 
       # Run the samba-tool command using the values of the domain, rfc and password options
-      samba-tool domain provision --use-rfc2307 --realm="#{domain}" --domain="#{realm}" --server-role=DC --dns-backend=SAMBA_INTERNAL --adminpass="#{password}"
+      samba-tool domain provision --use-rfc2307 --realm="#{realm}" --domain="#{domain}" --server-role=DC --dns-backend=SAMBA_INTERNAL --adminpass="#{password}"
       systemctl enable samba-ad-dc.service
       systemctl start samba-ad-dc.service
     end
