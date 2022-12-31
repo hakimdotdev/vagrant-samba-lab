@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "server1" do |server1|
     server1.vm.box = "ubuntu/focal64"
     server1.vm.hostname = "server1"
-    server1.vm.network "private_network", ip: "192.168.50.10"
+    server1.vm.network "private_network", ip: "192.168.0.10"
     server1.vm.network "public_network", adapter: 2
     server1.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
       ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
 
       # Copy the public key of server1 to authorized_keys of server2
-      # ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@192.168.50.11
+      # ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@192.168.0.11
 	  
 	    # Create the Netplan configuration
       echo '
@@ -47,12 +47,12 @@ Vagrant.configure("2") do |config|
         version: 2
         renderer: networkd
         ethernets:
-          eth0:
+          enp0s3:
             dhcp4: no
-            addresses: [192.168.50.10/24]
-            gateway4: 192.168.50.1
+            addresses: [192.168.0.10/24]
+            gateway4: 192.168.0.1
             nameservers:
-              addresses: [192.168.50.10,192.168.50.11]
+              addresses: [192.168.0.10,192.168.0.11]
       ' > /etc/netplan/00-installer-config.yaml
       
       # Apply the configuration
@@ -78,7 +78,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "server2" do |server2|
     server2.vm.box = "ubuntu/focal64"
     server2.vm.hostname = "server2"
-    server2.vm.network "private_network", ip: "192.168.50.11"
+    server2.vm.network "private_network", ip: "192.168.0.11"
     server2.vm.network "public_network", adapter: 2
     server2.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
@@ -91,7 +91,7 @@ Vagrant.configure("2") do |config|
       ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
 
       # Copy the public key of server2 to authorized_keys of server1
-      ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@192.168.50.10
+      ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@192.168.0.10
 	  
 	    # Create the Netplan configuration
       echo '
@@ -99,12 +99,12 @@ Vagrant.configure("2") do |config|
         version: 2
         renderer: networkd
         ethernets:
-          eth0:
+          enp0s3:
             dhcp4: no
-            addresses: [192.168.50.11/24]
-            gateway4: 192.168.50.1
+            addresses: [192.168.0.11/24]
+            gateway4: 192.168.0.1
             nameservers:
-              addresses: [192.168.50.10,192.168.50.11]
+              addresses: [192.168.0.10,192.168.0.11]
       ' > /etc/netplan/00-installer-config.yaml
       
       # Apply the configuration
@@ -125,12 +125,12 @@ Vagrant.configure("2") do |config|
         version: 2
         renderer: networkd
         ethernets:
-          eth0:
+          enp0s3:
             dhcp4: no
-            addresses: [192.168.50.11/24]
-            gateway4: 192.168.50.1
+            addresses: [192.168.0.11/24]
+            gateway4: 192.168.0.1
             nameservers: {domain}
-              addresses: [192.168.50.11,192.168.50.10]
+              addresses: [192.168.0.11,192.168.0.10]
       EOF
     SHELL
   end
